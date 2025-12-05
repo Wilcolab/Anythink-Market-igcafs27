@@ -46,19 +46,22 @@ function calculate(operand1, operand2, operation) {
 
     setLoading(true);
 
-    var http = new XMLHttpRequest();
-    http.open("GET", uri, true);
-    http.onload = function () {
-        setLoading(false);
-
-        if (http.status == 200) {
-            var response = JSON.parse(http.responseText);
-            setValue(response.result);
-        } else {
+    fetch(uri)
+        .then(function(response) {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Request failed');
+            }
+        })
+        .then(function(data) {
+            setLoading(false);
+            setValue(data.result);
+        })
+        .catch(function() {
+            setLoading(false);
             setError();
-        }
-    };
-    http.send(null);
+        });
 }
 
 function clearPressed() {
