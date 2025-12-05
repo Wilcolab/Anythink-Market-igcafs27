@@ -1,8 +1,8 @@
 'use strict';
 
-var value = 0;
+let value = 0;
 
-var states = {
+const states = {
     "start": 0,
     "operand1": 1,
     "operator": 2,
@@ -10,14 +10,14 @@ var states = {
     "complete": 4
 };
 
-var state = states.start;
+let state = states.start;
 
-var operand1 = 0;
-var operand2 = 0;
-var operation = null;
+let operand1 = 0;
+let operand2 = 0;
+let operation = null;
 
 function calculate(operand1, operand2, operation) {
-    var uri = location.origin + "/arithmetic";
+    let uri = location.origin + "/arithmetic";
 
     // TODO: Add operator
     switch (operation) {
@@ -79,7 +79,7 @@ function clearEntryPressed() {
 }
 
 function numberPressed(n) {
-    var value = getValue();
+    let value = getValue();
 
     if (state == states.start || state == states.complete) {
         value = n;
@@ -109,7 +109,7 @@ function decimalPressed() {
 }
 
 function signPressed() {
-    var value = getValue();
+    const value = getValue();
 
     if (value != 0) {
         setValue(-1 * value);
@@ -157,7 +157,7 @@ function getValue() {
 
 function setValue(n) {
     value = n;
-    var displayValue = value;
+    let displayValue = value;
 
     if (displayValue > 99999999) {
         displayValue = displayValue.toExponential(4);
@@ -169,10 +169,10 @@ function setValue(n) {
         displayValue = displayValue.toExponential(3);
     }
 
-    var chars = displayValue.toString().split("");
-    var html = "";
+    const chars = displayValue.toString().split("");
+    let html = "";
 
-    for (var c of chars) {
+    for (const c of chars) {
         if (c == '-') {
             html += "<span class=\"resultchar negative\">" + c + "</span>";
         } else if (c == '.') {
@@ -198,9 +198,9 @@ function setLoading(loading) {
         document.getElementById("loading").style.visibility = "hidden";
     }
 
-    var buttons = document.querySelectorAll("BUTTON");
+    const buttons = document.querySelectorAll("BUTTON");
 
-    for (var i = 0; i < buttons.length; i++) {
+    for (let i = 0; i < buttons.length; i++) {
         buttons[i].disabled = loading;
     }
 }
